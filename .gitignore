@@ -5,3 +5,7 @@ node_modules
 dist
 /generated/prisma
 /src/generated
+
+/../src/generated/prisma
+
+/generated/prisma

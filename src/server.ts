@@ -1,6 +1,6 @@
 import { Server } from 'node:http';
 import app from './app';
-import { envVars } from './config/env';
+import { envVars } from './app/config/env';
 
 const port = 5000; // The port your express server will be running on.
 

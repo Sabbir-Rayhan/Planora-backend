@@ -4,11 +4,13 @@ dotenv.config();
 
 interface EnvConfig {
   PORT: string;
+  DATABASE_URL: string;
 }
 
 const loadEnvVariables = (): EnvConfig => {
   const requiredEnvVars = [
     "PORT",
+    "DATABASE_URL",
   ];
 
   requiredEnvVars.forEach((varName) => {
@@ -21,6 +23,7 @@ const loadEnvVariables = (): EnvConfig => {
 
   return {
     PORT: process.env.PORT || "5000",
+    DATABASE_URL: process.env.DATABASE_URL || "",
   };
 };
 
