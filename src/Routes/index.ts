@@ -3,10 +3,12 @@ import {Router} from 'express';
 import { AuthRoutes } from '../app/module/auth/auth.route';
 import checkAuth from '../app/middleware/checkAuth';
 import { UserRole } from '../generated/prisma/enums';
+import { UserRoutes } from '../app/module/user/user.route';
 
 const router = Router();
 
 router.use('/auth',AuthRoutes)
+router.use('/users',UserRoutes)
 
 
 
