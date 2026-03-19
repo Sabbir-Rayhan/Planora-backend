@@ -7,6 +7,7 @@ import { UserRoutes } from '../app/module/user/user.route';
 import { EventRoutes } from '../app/module/event/event.route';
 import { ParticipationRoutes } from '../app/module/participation/participation.route';
 import { InvitationRoutes } from '../app/module/invitation/invitation.route';
+import { ReviewRoutes } from '../app/module/review/review.route';
 
 const router = Router();
 
@@ -15,6 +16,7 @@ router.use('/users',UserRoutes)
 router.use('/events',EventRoutes)
 router.use('/participations',ParticipationRoutes)
 router.use('/invitations',InvitationRoutes)
+router.use('/reviews',ReviewRoutes)
 
 
 
