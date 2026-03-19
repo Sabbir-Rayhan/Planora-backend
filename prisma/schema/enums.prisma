@@ -1,0 +1,34 @@
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum EventType {
+  PUBLIC
+  PRIVATE
+}
+
+enum ParticipantStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  BANNED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}

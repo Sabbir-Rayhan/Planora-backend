@@ -1,0 +1,23 @@
+model Event {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  date        DateTime
+  time        String
+  venue       String
+  eventType   EventType   @default(PUBLIC)
+  status      EventStatus @default(UPCOMING)
+  fee         Float       @default(0)
+  isPaid      Boolean     @default(false)
+  isFeatured  Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  organizerId String
+  organizer   User   @relation(fields: [organizerId], references: [id])
+
+  participations Participation[]
+  invitations    Invitation[]
+  reviews        Review[]
+  payments       Payment[]
+}
