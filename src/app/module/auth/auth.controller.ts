@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import catchAsync from '../../shared/catchAsync';
 import { AuthService } from './auth.service';
-import { setTokenCookie } from '../../utils/cookie';
+import { setTokenCookie ,clearTokenCookie} from '../../utils/cookie';
 import { sendResponse } from '../../shared/sendResponse';
+
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body);
@@ -31,4 +32,15 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const AuthController = { register, login };
+const logout = catchAsync(async (req: Request, res: Response) => {
+  clearTokenCookie(res, 'refreshToken');
+
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: 'Logged out successfully',
+    data: null,
+  });
+});
+
+export const AuthController = { register, login, logout };
