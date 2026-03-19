@@ -12,7 +12,14 @@ const port = 5000; // The port your express server will be running on.
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL as string,
+  ],
+  credentials: true, // ← this is critical for cookies to work
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
