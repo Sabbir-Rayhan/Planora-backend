@@ -10,6 +10,11 @@ interface EnvConfig {
   JWT_ACCESS_EXPIRES_IN : string
   JWT_REFRESH_EXPIRES_IN : string
   BCRYPT_SALT_ROUNDS : number
+  FRONTEND_URL : string
+  BACKEND_URL : string
+  SSL_STORE_ID : string
+  SSL_STORE_PASSWORD : string
+  SSL_IS_LIVE : boolean
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -21,6 +26,11 @@ const loadEnvVariables = (): EnvConfig => {
     "JWT_ACCESS_EXPIRES_IN",
     "JWT_REFRESH_EXPIRES_IN",
     "BCRYPT_SALT_ROUNDS",
+    "FRONTEND_URL",
+    "BACKEND_URL",
+    "SSL_STORE_ID",
+    "SSL_STORE_PASSWORD",
+    "SSL_IS_LIVE",
   ];
 
   requiredEnvVars.forEach((varName) => {
@@ -39,6 +49,11 @@ const loadEnvVariables = (): EnvConfig => {
     JWT_ACCESS_EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN || "",
     JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || "",
     BCRYPT_SALT_ROUNDS: parseInt(process.env.BCRYPT_SALT_ROUNDS || "10"),
+    FRONTEND_URL: process.env.FRONTEND_URL || "",
+    BACKEND_URL: process.env.BACKEND_URL || "",
+    SSL_STORE_ID: process.env.SSL_STORE_ID || "",
+    SSL_STORE_PASSWORD: process.env.SSL_STORE_PASSWORD || "",
+    SSL_IS_LIVE: process.env.SSL_IS_LIVE === "true",
   };
 };
 
