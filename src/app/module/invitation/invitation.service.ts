@@ -115,7 +115,7 @@ const acceptInvitation = async (userId: string, invitationId: string) => {
   };
 };
 
-// ── Decline invitation (invited user) ─────────────────
+// ── Decline invitation (invited user) 
 const declineInvitation = async (userId: string, invitationId: string) => {
   const invitation = await prisma.invitation.findUnique({
     where: { id: invitationId },
@@ -141,7 +141,7 @@ const declineInvitation = async (userId: string, invitationId: string) => {
   return null;
 };
 
-// ── Get my invitations (user) ─────────────────────────
+// ── Get my invitations (user)
 const getMyInvitations = async (userId: string) => {
   const invitations = await prisma.invitation.findMany({
     where: { userId },
@@ -158,7 +158,7 @@ const getMyInvitations = async (userId: string) => {
   return invitations;
 };
 
-// ── Get event invitations (organizer) ─────────────────
+// ── Get event invitations (organizer) 
 const getEventInvitations = async (
   eventId: string,
   organizerId: string,

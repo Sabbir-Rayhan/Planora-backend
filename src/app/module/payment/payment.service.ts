@@ -128,6 +128,8 @@ const paymentSuccess = async (paymentId: string) => {
     data: { status: 'PAID' },
   });
 
+  
+
   // update participation status
   // if private event → still pending (host must approve)
   // if public event → approved

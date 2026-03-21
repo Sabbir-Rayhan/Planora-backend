@@ -2,7 +2,7 @@ import AppError from '../../errorHelpers/AppError';
 import { prisma } from '../../lib/prisma';
 import { ICreateEventPayload, IEventFilterPayload, IUpdateEventPayload } from './event.interface';
 
-// ── Create event ──────────────────────────────────────
+// ── Create event
 const createEvent = async (userId: string, payload: ICreateEventPayload) => {
   if (payload.fee && payload.fee > 0) {
     payload.isPaid = true;
@@ -19,7 +19,7 @@ const createEvent = async (userId: string, payload: ICreateEventPayload) => {
   return event;
 };
 
-// ── Get all events ────────────────────────────────────
+// ── Get all events 
 const getAllEvents = async (filters: IEventFilterPayload) => {
   const { eventType, isPaid, status, search } = filters;
 
@@ -50,7 +50,7 @@ const getAllEvents = async (filters: IEventFilterPayload) => {
   return events;
 };
 
-// ── Get single event ──────────────────────────────────
+// ── Get single event 
 const getEventById = async (eventId: string) => {
   const event = await prisma.event.findUnique({
     where: { id: eventId },
@@ -76,7 +76,7 @@ const getEventById = async (eventId: string) => {
   return event;
 };
 
-// ── Update event ──────────────────────────────────────
+// ── Update event 
 const updateEvent = async (
   eventId: string,
   userId: string,
@@ -111,7 +111,7 @@ const updateEvent = async (
   return updated;
 };
 
-// ── Delete event ──────────────────────────────────────
+// ── Delete event 
 const deleteEvent = async (
   eventId: string,
   userId: string,
@@ -135,7 +135,7 @@ const deleteEvent = async (
   return null;
 };
 
-// ── Get my events ─────────────────────────────────────
+// ── Get my events 
 const getMyEvents = async (userId: string) => {
   const events = await prisma.event.findMany({
     where: { organizerId: userId },
@@ -150,7 +150,7 @@ const getMyEvents = async (userId: string) => {
   return events;
 };
 
-// ── Toggle featured (admin only) ──────────────────────
+// ── Toggle featured (admin only) 
 const toggleFeatured = async (eventId: string) => {
   const event = await prisma.event.findUnique({
     where: { id: eventId },
