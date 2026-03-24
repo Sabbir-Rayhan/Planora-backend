@@ -1,40 +1,30 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import globalErrorHandler from './app/middleware/globalErrorHandler';
-import notFound from './app/middleware/notFound';
-import { IndexRoutes } from './Routes';
+import globalErrorHandler from './app/middleware/globalErrorHandler.js';
+import notFound from './app/middleware/notFound.js';
+import { IndexRoutes } from './Routes/index.js';
 
 const app: Application = express();
-const port = 5000; // The port your express server will be running on.
 
-// Enable URL-encoded form data parsing
-app.use(express.urlencoded({ extended: true }));
-
-// Middleware to parse JSON bodies
 app.use(cors({
   origin: [
     'http://localhost:3000',
     process.env.FRONTEND_URL as string,
   ],
-  credentials: true, // ← this is critical for cookies to work
+  credentials: true,
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 
-// Basic route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript + Express!');
+  res.json({ success: true, message: 'Planora API is running!' });
 });
 
-app.use('/api/v1', IndexRoutes)
-
-// Global error handler
+app.use('/api/v1', IndexRoutes);
 app.use(globalErrorHandler);
-
-// Not found handler
 app.use(notFound);
 
 export default app;

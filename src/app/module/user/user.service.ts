@@ -1,6 +1,7 @@
-import AppError from '../../errorHelpers/AppError';
-import { prisma } from '../../lib/prisma';
-import { IUpdateProfilePayload } from './user.interface';
+import AppError from "../../errorHelpers/AppError.js";
+import { prisma } from "../../lib/prisma.js";
+import { IUpdateProfilePayload } from "./user.interface.js";
+
 
 // ── Get my profile ────────────────────────────────────
 const getMyProfile = async (userId: string) => {

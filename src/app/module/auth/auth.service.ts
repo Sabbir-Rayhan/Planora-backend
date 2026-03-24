@@ -1,9 +1,10 @@
 import bcrypt from 'bcrypt';
-import AppError from '../../errorHelpers/AppError';
-import { envVars } from '../../config/env';
-import { generateToken } from '../../utils/jwt';
-import { ILoginPayload, IRegisterPayload } from './auth.interface';
-import { prisma } from '../../lib/prisma';
+import { ILoginPayload, IRegisterPayload } from './auth.interface.js';
+import { prisma } from '../../lib/prisma.js';
+import AppError from '../../errorHelpers/AppError.js';
+import { envVars } from '../../config/env.js';
+import { generateToken } from '../../utils/jwt.js';
+
 
 // ── Register ──────────────────────────────────────────
 const register = async (payload: IRegisterPayload) => {

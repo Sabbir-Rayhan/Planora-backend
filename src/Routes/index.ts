@@ -1,14 +1,13 @@
 import { Request,Response } from 'express';
 import {Router} from 'express';
-import { AuthRoutes } from '../app/module/auth/auth.route';
-import checkAuth from '../app/middleware/checkAuth';
-import { UserRole } from '../generated/prisma/enums';
-import { UserRoutes } from '../app/module/user/user.route';
-import { EventRoutes } from '../app/module/event/event.route';
-import { ParticipationRoutes } from '../app/module/participation/participation.route';
-import { InvitationRoutes } from '../app/module/invitation/invitation.route';
-import { ReviewRoutes } from '../app/module/review/review.route';
-import { PaymentRoutes } from '../app/module/payment/payment.route';
+import { AuthRoutes } from '../app/module/auth/auth.route.js';
+import { UserRoutes } from '../app/module/user/user.route.js';
+import { EventRoutes } from '../app/module/event/event.route.js';
+import { ParticipationRoutes } from '../app/module/participation/participation.route.js';
+import { InvitationRoutes } from '../app/module/invitation/invitation.route.js';
+import { ReviewRoutes } from '../app/module/review/review.route.js';
+import { PaymentRoutes } from '../app/module/payment/payment.route.js';
+
 
 const router = Router();
 

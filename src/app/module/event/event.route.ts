@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { EventController } from './event.controller';
-import checkAuth from '../../middleware/checkAuth';
-import validateRequest from '../../middleware/validateRequest';
-import { createEventSchema, updateEventSchema } from './event.validation';
-import { UserRole } from '../../../generated/prisma/enums';
+import { EventController } from './event.controller.js';
+import { UserRole } from '../../../generated/prisma/enums.js';
+import validateRequest from '../../middleware/validateRequest.js';
+import checkAuth from '../../middleware/checkAuth.js';
+import { createEventSchema, updateEventSchema } from './event.validation.js';
 
 
 const router = Router();

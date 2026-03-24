@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { PaymentController } from './payment.controller';
-import checkAuth from '../../middleware/checkAuth';
-import { UserRole } from '../../../generated/prisma/enums';
+import checkAuth from '../../middleware/checkAuth.js';
+import { UserRole } from '../../../generated/prisma/enums.js';
+import { PaymentController } from './payment.controller.js';
+
 
 const router = Router();
 

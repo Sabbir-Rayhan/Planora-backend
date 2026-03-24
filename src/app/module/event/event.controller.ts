@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
+import catchAsync from '../../shared/catchAsync.js';
+import { EventService } from './event.service.js';
+import { sendResponse } from '../../shared/sendResponse.js';
 
-import { EventService } from './event.service';
-import { sendResponse } from '../../shared/sendResponse';
 
 const createEvent = catchAsync(async (req: Request, res: Response) => {
   const result = await EventService.createEvent(req.user.userId, req.body);

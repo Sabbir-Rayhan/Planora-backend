@@ -1,5 +1,6 @@
-import AppError from '../../errorHelpers/AppError';
-import { prisma } from '../../lib/prisma';
+import AppError from "../../errorHelpers/AppError.js";
+import { prisma } from "../../lib/prisma.js";
+
 
 // Send invitation (organizer) 
 const sendInvitation = async (

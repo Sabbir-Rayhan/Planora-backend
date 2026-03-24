@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../lib/prisma.js';
+
 
 
 const seed = async () => {

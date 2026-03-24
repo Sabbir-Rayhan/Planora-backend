@@ -1,6 +1,7 @@
-import AppError from '../../errorHelpers/AppError';
-import { prisma } from '../../lib/prisma';
-import { ICreateReviewPayload, IUpdateReviewPayload } from './review.interface';
+import AppError from "../../errorHelpers/AppError.js";
+import { prisma } from "../../lib/prisma.js";
+import { ICreateReviewPayload, IUpdateReviewPayload } from "./review.interface.js";
+
 
 //  Create review 
 const createReview = async (userId: string, payload: ICreateReviewPayload) => {
@@ -75,7 +76,7 @@ const getEventReviews = async (eventId: string) => {
   // calculate average rating
   const averageRating =
     reviews.length > 0
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+      ? reviews.reduce((sum: any, r: { rating: any; }) => sum + r.rating, 0) / reviews.length
       : 0;
 
   return {

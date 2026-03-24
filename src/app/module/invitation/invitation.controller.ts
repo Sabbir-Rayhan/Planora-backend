@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
-import { InvitationService } from './invitation.service';
-import { sendResponse } from '../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync.js';
+import { InvitationService } from './invitation.service.js';
+import { sendResponse } from '../../shared/sendResponse.js';
+
 
 const sendInvitation = catchAsync(async (req: Request, res: Response) => {
   const { eventId, userId } = req.body;

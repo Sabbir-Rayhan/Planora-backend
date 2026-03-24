@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
-import { ParticipationService } from './participation.service';
-import { sendResponse } from '../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync.js';
+import { ParticipationService } from './participation.service.js';
+import { sendResponse } from '../../shared/sendResponse.js';
+
 
 const joinEvent = catchAsync(async (req: Request, res: Response) => {
   const result = await ParticipationService.joinEvent(

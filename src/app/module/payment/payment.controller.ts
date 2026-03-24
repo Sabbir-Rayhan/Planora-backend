@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
-import { PaymentService } from './payment.service';
-import { envVars } from '../../config/env';
-import { sendResponse } from '../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync.js';
+import { PaymentService } from './payment.service.js';
+import { sendResponse } from '../../shared/sendResponse.js';
+import { envVars } from '../../config/env.js';
+
 
 const initiatePayment = catchAsync(async (req: Request, res: Response) => {
   const { eventId } = req.body;

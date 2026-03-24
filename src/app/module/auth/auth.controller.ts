@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
-import { AuthService } from './auth.service';
-import { setTokenCookie ,clearTokenCookie} from '../../utils/cookie';
-import { sendResponse } from '../../shared/sendResponse';
+import { sendResponse } from '../../shared/sendResponse.js';
+import catchAsync from '../../shared/catchAsync.js';
+import { clearTokenCookie, setTokenCookie } from '../../utils/cookie.js';
+import { AuthService } from './auth.service.js';
 
 
 const register = catchAsync(async (req: Request, res: Response) => {

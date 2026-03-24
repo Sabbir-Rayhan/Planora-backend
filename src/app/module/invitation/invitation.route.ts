@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { InvitationController } from './invitation.controller';
-import checkAuth from '../../middleware/checkAuth';
-import { UserRole } from '../../../generated/prisma/enums';
+import checkAuth from '../../middleware/checkAuth.js';
+import { UserRole } from '../../../generated/prisma/enums.js';
+import { InvitationController } from './invitation.controller.js';
+
 
 
 const router = Router();

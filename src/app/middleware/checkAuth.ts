@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { verifyToken } from '../utils/jwt';
-import { envVars } from '../config/env';
-import AppError from '../errorHelpers/AppError';
-import catchAsync from '../shared/catchAsync';
-import { UserRole } from '../../generated/prisma/enums';
-import { prisma } from '../lib/prisma';
+import { UserRole } from '../../generated/prisma/enums.js';
+import catchAsync from '../shared/catchAsync.js';
+import AppError from '../errorHelpers/AppError.js';
+import { verifyToken } from '../utils/jwt.js';
+import { prisma } from '../lib/prisma.js';
+import { envVars } from '../config/env.js';
+
 
 
 const checkAuth = (...roles: UserRole[]) => {

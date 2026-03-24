@@ -1,6 +1,7 @@
-import AppError from '../../errorHelpers/AppError';
-import { prisma } from '../../lib/prisma';
-import { ICreateEventPayload, IEventFilterPayload, IUpdateEventPayload } from './event.interface';
+import AppError from '../../errorHelpers/AppError.js';
+import { prisma } from '../../lib/prisma.js';
+import { ICreateEventPayload, IEventFilterPayload, IUpdateEventPayload } from './event.interface.js';
+
 
 // ── Create event
 const createEvent = async (userId: string, payload: ICreateEventPayload) => {

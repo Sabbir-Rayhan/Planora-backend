@@ -1,7 +1,7 @@
-import AppError from '../../errorHelpers/AppError';
-import { envVars } from '../../config/env';
-import { prisma } from '../../lib/prisma';
 import SSLCommerz from 'sslcommerz-lts';
+import { prisma } from '../../lib/prisma.js';
+import AppError from '../../errorHelpers/AppError.js';
+import { envVars } from '../../config/env.js';
 
 // ── Initiate payment 
 const initiatePayment = async (userId: string, eventId: string) => {

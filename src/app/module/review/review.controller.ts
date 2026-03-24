@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import catchAsync from '../../shared/catchAsync';
-import { ReviewService } from './review.service';
-import { sendResponse } from '../../shared/sendResponse';
+import catchAsync from '../../shared/catchAsync.js';
+import { sendResponse } from '../../shared/sendResponse.js';
+import { ReviewService } from './review.service.js';
+
 
 const createReview = catchAsync(async (req: Request, res: Response) => {
   const result = await ReviewService.createReview(req.user.userId, req.body);
