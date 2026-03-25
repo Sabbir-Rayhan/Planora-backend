@@ -162,6 +162,14 @@ const toggleFeatured = async (eventId: string) => {
     throw new AppError(404, 'Event not found');
   }
 
+  // if featuring this event, unfeature all others first
+  if (!event.isFeatured) {
+    await prisma.event.updateMany({
+      where: { isFeatured: true },
+      data: { isFeatured: false },
+    });
+  }
+
   const updated = await prisma.event.update({
     where: { id: eventId },
     data: { isFeatured: !event.isFeatured },
