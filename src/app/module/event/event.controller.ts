@@ -16,17 +16,18 @@ const createEvent = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllEvents = catchAsync(async (req: Request, res: Response) => {
-  const { eventType, isPaid, status, search } = req.query;
+  const { eventType, isPaid, status, search, isFeatured } = req.query;
 
   const result = await EventService.getAllEvents({
     eventType: eventType as any,
     isPaid: isPaid === 'true' ? true : isPaid === 'false' ? false : undefined,
     status: status as string,
     search: search as string,
+    isFeatured: isFeatured === 'true' ? true : isFeatured === 'false' ? false : undefined,
   });
 
   sendResponse(res, {
-    httpStatusCode: 200,
+    httpStatusCode : 200,
     success: true,
     message: 'Events retrieved successfully',
     data: result,

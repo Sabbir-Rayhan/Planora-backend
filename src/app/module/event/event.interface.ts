@@ -26,4 +26,5 @@ export interface IEventFilterPayload {
   isPaid?: boolean;
   status?: string;
   search?: string;
+  isFeatured?: boolean;
 }

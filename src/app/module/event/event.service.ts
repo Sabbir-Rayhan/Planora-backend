@@ -22,13 +22,14 @@ const createEvent = async (userId: string, payload: ICreateEventPayload) => {
 
 // ── Get all events 
 const getAllEvents = async (filters: IEventFilterPayload) => {
-  const { eventType, isPaid, status, search } = filters;
+  const { eventType, isPaid, status, search, isFeatured } = filters;
 
   const events = await prisma.event.findMany({
     where: {
       ...(eventType && { eventType }),
       ...(isPaid !== undefined && { isPaid }),
       ...(status && { status: status as any }),
+      ...(isFeatured !== undefined && { isFeatured }),
       ...(search && {
         OR: [
           { title: { contains: search, mode: 'insensitive' } },
