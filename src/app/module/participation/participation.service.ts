@@ -8,82 +8,91 @@ const joinEvent = async (userId: string, eventId: string) => {
     where: { id: eventId },
   });
 
-  if (!event) {
-    throw new AppError(404, 'Event not found');
-  }
+  if (!event) throw new AppError(404, 'Event not found');
+  if (event.status === 'CANCELLED') throw new AppError(400, 'This event has been cancelled');
+  if (event.status === 'COMPLETED') throw new AppError(400, 'This event has already been completed');
+  if (event.organizerId === userId) throw new AppError(400, 'You cannot join your own event');
 
-  if (event.status === 'CANCELLED') {
-    throw new AppError(400, 'This event has been cancelled');
-  }
+  // check already joined
+// check already joined
+const alreadyJoined = await prisma.participation.findUnique({
+  where: { userId_eventId: { userId, eventId } },
+});
 
-  if (event.status === 'COMPLETED') {
-    throw new AppError(400, 'This event has already been completed');
-  }
-
-  
-  if (event.organizerId === userId) {
-    throw new AppError(400, 'You cannot join your own event');
-  }
-
-  
-  const alreadyJoined = await prisma.participation.findUnique({
-    where: { userId_eventId: { userId, eventId } },
-  });
-
-  if (alreadyJoined) {
+if (alreadyJoined) {
+  if (event.isPaid) {
+    // check if payment was completed
+    const payment = await prisma.payment.findFirst({
+      where: { userId, eventId, status: 'PAID' },
+    });
+    if (payment) {
+      throw new AppError(409, 'You have already joined this event');
+    }
+    // payment not done — just return requiresPayment
+    // don't delete participation, payment service will handle it
+    return {
+      participation: alreadyJoined,
+      requiresPayment: true,
+      fee: event.fee,
+      eventId: event.id,
+    };
+  } else {
     throw new AppError(409, 'You have already joined this event');
   }
+}
 
-  
+  if (alreadyJoined) {
+    if (event.isPaid) {
+      // check if payment was completed
+      const payment = await prisma.payment.findFirst({
+        where: { userId, eventId, status: 'PAID' },
+      });
+      if (payment) {
+        throw new AppError(409, 'You have already joined this event');
+      }
+      // payment not done — delete old pending participation so they can retry
+      await prisma.participation.delete({
+        where: { userId_eventId: { userId, eventId } },
+      });
+    } else {
+      throw new AppError(409, 'You have already joined this event');
+    }
+  }
+
+  // ── PUBLIC + FREE → instantly APPROVED
   if (event.eventType === 'PUBLIC' && !event.isPaid) {
     const participation = await prisma.participation.create({
-      data: {
-        userId,
-        eventId,
-        status: 'APPROVED',
-      },
+      data: { userId, eventId, status: 'APPROVED' },
     });
     return { participation, requiresPayment: false };
   }
 
-  
+  // ── PUBLIC + PAID → don't create participation yet, redirect to payment
   if (event.eventType === 'PUBLIC' && event.isPaid) {
-    const participation = await prisma.participation.create({
-      data: {
-        userId,
-        eventId,
-        status: 'PENDING',
-      },
-    });
-    return { participation, requiresPayment: true, fee: event.fee };
+    return {
+      participation: null,
+      requiresPayment: true,
+      fee: event.fee,
+      eventId: event.id,
+    };
   }
 
-  
+  // ── PRIVATE + FREE → create PENDING, host approves
   if (event.eventType === 'PRIVATE' && !event.isPaid) {
     const participation = await prisma.participation.create({
-      data: {
-        userId,
-        eventId,
-        status: 'PENDING',
-      },
+      data: { userId, eventId, status: 'PENDING' },
     });
     return { participation, requiresPayment: false, requiresApproval: true };
   }
 
-  
+  // ── PRIVATE + PAID → don't create participation yet, redirect to payment
   if (event.eventType === 'PRIVATE' && event.isPaid) {
-    const participation = await prisma.participation.create({
-      data: {
-        userId,
-        eventId,
-        status: 'PENDING',
-      },
-    });
     return {
-      participation,
+      participation: null,
       requiresPayment: true,
       requiresApproval: true,
       fee: event.fee,
+      eventId: event.id,
     };
   }
 };
@@ -112,6 +121,9 @@ const getEventParticipants = async (
     include: {
       user: {
         select: { id: true, name: true, email: true },
+      },
+      payment: {
+        select: { status: true, amount: true },
       },
     },
     orderBy: { createdAt: 'desc' },

@@ -127,11 +127,32 @@ const deleteEvent = async (
     throw new AppError(404, 'Event not found');
   }
 
-  // only organizer or admin can delete
   if (event.organizerId !== userId && role !== 'ADMIN') {
     throw new AppError(403, 'You are not authorized to delete this event');
   }
 
+  // delete in correct order to avoid foreign key constraint errors
+  // 1. delete payments first
+  await prisma.payment.deleteMany({
+    where: { eventId },
+  });
+
+  // 2. delete participations
+  await prisma.participation.deleteMany({
+    where: { eventId },
+  });
+
+  // 3. delete invitations
+  await prisma.invitation.deleteMany({
+    where: { eventId },
+  });
+
+  // 4. delete reviews
+  await prisma.review.deleteMany({
+    where: { eventId },
+  });
+
+  // 5. finally delete the event
   await prisma.event.delete({ where: { id: eventId } });
 
   return null;

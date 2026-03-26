@@ -9,73 +9,58 @@ const initiatePayment = async (userId: string, eventId: string) => {
     where: { id: eventId },
   });
 
-  if (!event) {
-    throw new AppError(404, 'Event not found');
+  if (!event) throw new AppError(404, 'Event not found');
+  if (!event.isPaid) throw new AppError(400, 'This event is free');
+
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new AppError(404, 'User not found');
+
+  // check if already paid
+  const existingPaidPayment = await prisma.payment.findFirst({
+    where: { userId, eventId, status: 'PAID' },
+  });
+  if (existingPaidPayment) {
+    throw new AppError(400, 'You have already paid for this event');
   }
 
-  if (!event.isPaid) {
-    throw new AppError(400, 'This event is free, no payment required');
-  }
-
-  // check participation exists
-  const participation = await prisma.participation.findUnique({
+  // get or create participation
+  let participation = await prisma.participation.findUnique({
     where: { userId_eventId: { userId, eventId } },
   });
 
   if (!participation) {
-    throw new AppError(404, 'Please join the event first');
-  }
-
-  if (participation.status === 'APPROVED') {
-    throw new AppError(400, 'You have already paid for this event');
-  }
-
-  if (participation.status === 'BANNED') {
-    throw new AppError(403, 'You have been banned from this event');
-  }
-
-  // check if payment already exists
-  const existingPayment = await prisma.payment.findFirst({
-    where: {
-      userId,
-      eventId,
-      status: 'PENDING',
-    },
-  });
-
-  // get user info
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-
-  if (!user) {
-    throw new AppError(404, 'User not found');
-  }
-
-  const transactionId = `TXN-${Date.now()}-${userId.slice(0, 8)}`;
-
-  // create or reuse payment record
-  let payment;
-  if (existingPayment) {
-    payment = existingPayment;
-  } else {
-    payment = await prisma.payment.create({
-      data: {
-        userId,
-        eventId,
-        participationId: participation.id,
-        amount: event.fee,
-        status: 'PENDING',
-        transactionId,
-      },
+    // create participation now
+    participation = await prisma.participation.create({
+      data: { userId, eventId, status: 'PENDING' },
     });
   }
 
-  // SSLCommerz payment data
+  // delete old pending/failed payments (but keep participation)
+  await prisma.payment.deleteMany({
+    where: {
+      userId,
+      eventId,
+      status: { in: ['PENDING', 'FAILED'] },
+    },
+  });
+
+  const transactionId = `TXN-${Date.now()}-${userId.slice(0, 8)}`;
+
+  const payment = await prisma.payment.create({
+    data: {
+      userId,
+      eventId,
+      participationId: participation.id,
+      amount: event.fee,
+      status: 'PENDING',
+      transactionId,
+    },
+  });
+
   const sslData = {
     total_amount: event.fee,
     currency: 'BDT',
-    tran_id: payment.transactionId || transactionId,
+    tran_id: transactionId,
     success_url: `${envVars.BACKEND_URL}/api/v1/payments/success?paymentId=${payment.id}`,
     fail_url: `${envVars.BACKEND_URL}/api/v1/payments/fail?paymentId=${payment.id}`,
     cancel_url: `${envVars.BACKEND_URL}/api/v1/payments/cancel?paymentId=${payment.id}`,
@@ -96,6 +81,7 @@ const initiatePayment = async (userId: string, eventId: string) => {
     ship_country: 'Bangladesh',
   };
 
+  const SSLCommerz = (await import('sslcommerz-lts')).default;
   const sslcz = new SSLCommerz(
     envVars.SSL_STORE_ID,
     envVars.SSL_STORE_PASSWORD,
