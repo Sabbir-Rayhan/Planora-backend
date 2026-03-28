@@ -33,9 +33,10 @@ Planora is a full-stack event management platform where users can create, manage
 ---
 
 ## 🔐 Admin Credentials
+```
 Email    : admin@planora.com
 Password : Mahee@123
-
+```
 
 ---
 
@@ -107,7 +108,7 @@ Password : Mahee@123
 ---
 
 ## 📁 Project Structure
-
+```
 planora-backend/
 ├── prisma/
 │   ├── schema/
@@ -156,29 +157,29 @@ planora-backend/
 ├── .env.example
 ├── package.json
 └── tsconfig.json
-
+```
 
 ---
 
 ## 🚀 API Endpoints
 
 ### Auth
-
+```
 POST   /api/v1/auth/register     Register new user
 POST   /api/v1/auth/login        Login user
 POST   /api/v1/auth/logout       Logout user
-
+```
 
 ### Users
-
+```
 GET    /api/v1/users/me          Get my profile
 PATCH  /api/v1/users/me          Update my profile
 GET    /api/v1/users             Get all users (Admin)
 PATCH  /api/v1/users/:id/status  Change user status (Admin)
-
+```
 
 ### Events
-
+```
 GET    /api/v1/events            Get all events (with filters)
 GET    /api/v1/events/:id        Get single event
 POST   /api/v1/events            Create event
@@ -186,10 +187,10 @@ PATCH  /api/v1/events/:id        Update event
 DELETE /api/v1/events/:id        Delete event
 GET    /api/v1/events/my/events  Get my events
 PATCH  /api/v1/events/:id/featured  Toggle featured (Admin)
-
+```
 
 ### Participations
-
+```
 POST   /api/v1/participations/join/:eventId    Join event
 DELETE /api/v1/participations/leave/:eventId   Leave event
 GET    /api/v1/participations/my               My participations
@@ -197,34 +198,34 @@ GET    /api/v1/participations/event/:eventId   Event participants
 PATCH  /api/v1/participations/approve/:id      Approve participant
 PATCH  /api/v1/participations/reject/:id       Reject participant
 PATCH  /api/v1/participations/ban/:id          Ban participant
-
+```
 
 ### Invitations
-
+```
 POST   /api/v1/invitations                    Send invitation
 GET    /api/v1/invitations/my                 My invitations
 PATCH  /api/v1/invitations/accept/:id         Accept invitation
 PATCH  /api/v1/invitations/decline/:id        Decline invitation
-
+```
 
 ### Reviews
-
+```
 POST   /api/v1/reviews                  Create review
 GET    /api/v1/reviews/event/:eventId   Get event reviews
 GET    /api/v1/reviews/my               My reviews
 PATCH  /api/v1/reviews/:id              Update review
 DELETE /api/v1/reviews/:id              Delete review
-
+```
 
 ### Payments
-
+```
 POST   /api/v1/payments/initiate   Initiate payment
 POST   /api/v1/payments/success    Payment success callback
 POST   /api/v1/payments/fail       Payment fail callback
 POST   /api/v1/payments/cancel     Payment cancel callback
 GET    /api/v1/payments/my         My payment history
 GET    /api/v1/payments/all        All payments (Admin)
-
+```
 
 ---
 
@@ -236,20 +237,20 @@ GET    /api/v1/payments/all        All payments (Admin)
 - Git
 
 ### Step 1 — Clone the repository
-bash
+```bash
 git clone https://github.com/Sabbir-Rayhan/Planora-backend.git
 cd planora-backend
-
+```
 
 ### Step 2 — Install dependencies
-bash
+```bash
 npm install
-
+```
 
 ### Step 3 — Setup environment variables
 
 Create a `.env` file in the root:
-env
+```env
 PORT=5000
 DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/planora"
 JWT_ACCESS_SECRET=your_access_secret_key
@@ -263,35 +264,35 @@ SSL_STORE_PASSWORD=qwerty
 SSL_IS_LIVE=false
 BACKEND_URL=http://localhost:5000
 FRONTEND_URL=http://localhost:3000
-
+```
 
 ### Step 4 — Run database migrations
-bash
+```bash
 npx prisma migrate dev
-
+```
 
 ### Step 5 — Generate Prisma client
-bash
+```bash
 npx prisma generate
-
+```
 
 ### Step 6 — Seed admin user
-bash
+```bash
 npm run seed
-
+```
 
 ### Step 7 — Start development server
-bash
+```bash
 npm run dev
-
+```
 
 Server runs at: `http://localhost:5000`
 
 ### Admin Login Credentials
-
+```
 Email    : admin@planora.com
 Password : admin123
-
+```
 
 ---
 
@@ -306,7 +307,7 @@ The backend is deployed on **Railway** with:
 ## 📝 Error Handling
 
 All API responses follow a consistent format:
-json
+```json
 // Success
 {
   "success": true,
@@ -319,9 +320,14 @@ json
   "success": false,
   "message": "Error description"
 }
+```
 
+---
+
+## 🤝 Contributing
+
+This project was built as an academic assignment for Programming Hero Batch 6.
 
 ---
 
 Thank You
-
