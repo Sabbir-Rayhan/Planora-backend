@@ -291,7 +291,7 @@ Server runs at: `http://localhost:5000`
 ### Admin Login Credentials
 ```
 Email    : admin@planora.com
-Password : admin123
+Password : Mahee@123
 ```
 
 ---
