@@ -1,8 +1,17 @@
+<div align="center">
+
 # 🎉 Planora — Backend API
 
 **A secure, scalable REST API for the Planora Event Management Platform**
 
-[Live API](https://planora-backend-production-d7e8.up.railway.app/api/v1) • [Frontend Repo](https://github.com/Sabbir-Rayhan/Planora-frontend) • [Live Site](https://planora-frontend-orpin.vercel.app)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://typescriptlang.org)
+[![Prisma](https://img.shields.io/badge/Prisma-7.5-purple.svg)](https://prisma.io)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://postgresql.org)
+
+[Live API](https://planora-backend-production-d7e8.up.railway.app) • [Frontend Repo](https://github.com/Sabbir-Rayhan/Planora-frontend) • [Live Site](https://planora-frontend-orpin.vercel.app)
+
+</div>
 
 ---
 
@@ -17,7 +26,7 @@ Planora is a full-stack event management platform where users can create, manage
 | Service | URL |
 |---------|-----|
 | 🌐 Frontend Live | https://planora-frontend-orpin.vercel.app |
-| 🚀 Backend API | https://planora-backend-production-d7e8.up.railway.app/api/v1 |
+| 🚀 Backend API | https://planora-backend-production-d7e8.up.railway.app |
 | 📁 Frontend Repo | https://github.com/Sabbir-Rayhan/Planora-frontend |
 | 📁 Backend Repo | https://github.com/Sabbir-Rayhan/Planora-backend |
 
