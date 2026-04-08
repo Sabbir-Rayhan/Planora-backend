@@ -15,5 +15,6 @@ router.post('/', checkAuth(UserRole.USER, UserRole.ADMIN), ReviewController.crea
 router.get('/my', checkAuth(UserRole.USER, UserRole.ADMIN), ReviewController.getMyReviews);
 router.patch('/:reviewId', checkAuth(UserRole.USER, UserRole.ADMIN), ReviewController.updateReview);
 router.delete('/:reviewId', checkAuth(UserRole.USER, UserRole.ADMIN), ReviewController.deleteReview);
+router.get('/testimonials', ReviewController.getTestimonials);
 
 export const ReviewRoutes = router;

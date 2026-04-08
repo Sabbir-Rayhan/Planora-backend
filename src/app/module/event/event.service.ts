@@ -193,6 +193,24 @@ const toggleFeatured = async (eventId: string) => {
   return updated;
 };
 
+
+// In event.service.ts
+const getStats = async () => {
+  const [totalEvents, totalUsers, totalParticipants, avgRatingResult] = await Promise.all([
+    prisma.event.count(),
+    prisma.user.count({ where: { status: 'ACTIVE' } }),
+    prisma.participation.count({ where: { status: 'APPROVED' } }),
+    prisma.review.aggregate({ _avg: { rating: true } }),
+  ]);
+
+  return {
+    totalEvents,
+    totalUsers,
+    totalParticipants,
+    avgRating: avgRatingResult._avg.rating?.toFixed(1) || '0.0',
+  };
+};
+
 export const EventService = {
   createEvent,
   getAllEvents,
@@ -201,4 +219,5 @@ export const EventService = {
   deleteEvent,
   getMyEvents,
   toggleFeatured,
+  getStats
 };

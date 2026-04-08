@@ -155,10 +155,40 @@ const getMyReviews = async (userId: string) => {
   return reviews;
 };
 
+// Add this to your review service
+const getTopReviewsForTestimonials = async (limit: number = 3) => {
+  const reviews = await prisma.review.findMany({
+    where: {
+      rating: { gte: 4 }, // Only 4 or 5 star reviews
+    },
+    include: {
+      user: {
+        select: { id: true, name: true },
+      },
+      event: {
+        select: { id: true, title: true },
+      },
+    },
+    orderBy: [{ rating: 'desc' }, { createdAt: 'desc' }],
+    take: limit,
+  });
+
+  // Transform to a cleaner format
+  return reviews.map(review => ({
+    id: review.id,
+    rating: review.rating,
+    comment: review.comment,
+    userName: review.user.name,
+    eventTitle: review.event.title,
+    date: review.createdAt,
+  }));
+};
+
 export const ReviewService = {
   createReview,
   getEventReviews,
   updateReview,
   deleteReview,
   getMyReviews,
+  getTopReviewsForTestimonials
 };

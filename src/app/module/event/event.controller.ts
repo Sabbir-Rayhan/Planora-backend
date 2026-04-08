@@ -98,6 +98,19 @@ const toggleFeatured = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+
+const getStats = catchAsync(async (req: Request, res: Response) => {
+  const stats = await EventService.getStats();
+  
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: 'Stats retrieved successfully',
+    data: stats,
+  });
+});
+
 export const EventController = {
   createEvent,
   getAllEvents,
@@ -106,4 +119,5 @@ export const EventController = {
   deleteEvent,
   getMyEvents,
   toggleFeatured,
+  getStats
 };

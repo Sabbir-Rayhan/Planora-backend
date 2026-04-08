@@ -67,10 +67,23 @@ const getMyReviews = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getTestimonials = catchAsync(async (req: Request, res: Response) => {
+  const limit = req.query.limit ? Number(req.query.limit) : 3;
+  const testimonials = await ReviewService.getTopReviewsForTestimonials(limit);
+  
+  sendResponse(res, {
+    httpStatusCode: 200,
+    success: true,
+    message: 'Testimonials retrieved successfully',
+    data: testimonials,
+  });
+});
+
 export const ReviewController = {
   createReview,
   getEventReviews,
   updateReview,
   deleteReview,
   getMyReviews,
+  getTestimonials
 };
