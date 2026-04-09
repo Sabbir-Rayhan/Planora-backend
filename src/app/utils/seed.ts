@@ -46,6 +46,8 @@ const seed = async () => {
   process.exit(0);
 };
 
+console.log("Seeding DB:", process.env.DATABASE_URL);
+
 seed().catch((err) => {
   console.error(err);
   process.exit(1);
